@@ -8,5 +8,8 @@
 </head>
 <body>
   sample  
-</body>
+</body> 
 </html>
+<script type="text/javascript">
+alert("testers");
+</script>  
