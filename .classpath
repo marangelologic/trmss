@@ -33,5 +33,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jersey-archive-1.19/contribs/oauth-client-1.19.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jersey-archive-1.19/contribs/oauth-server-1.19.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jersey-archive-1.19/contribs/oauth-signature-1.19.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.36-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

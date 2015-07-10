@@ -11,7 +11,7 @@
 <script src='js/fullcalendar-2.3.2/lib/jquery.min.js'></script>
 <script src='js/fullcalendar-2.3.2/fullcalendar.min.js'></script>
 
-
+<link rel="shortcut icon" href="icon/calendar_icon1.png" />
 <link rel="stylesheet" type="text/css"
 	href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.7/css/foundation.min.css">
 
@@ -27,91 +27,12 @@
 	src="js/foundation-datepicker-master/js/foundation-datepicker.min.js"></script>
 <link rel="stylesheet"
 	href="js/foundation-datepicker-master/css/foundation-datepicker.min.css">
-
-<script>
-	$(document).ready(
-			function() {
-				$('#calendar').fullCalendar(
-						{
-							header : {
-								left : 'prev,next today',
-								center : 'title',
-								right : 'month,agendaWeek,agendaDay'
-							},
-							/* defaultView : "basicWeek", */
-							defaultDate : new Date(),
-							selectable : true,
-							selectHelper : true,
-							select : function(start, end) {
-								var title = prompt('Event Title:');
-								var eventData;
-								if (title) {
-									eventData = {
-										title : title,
-										start : start,
-										end : end
-									};
-									$('#calendar').fullCalendar('renderEvent',
-											eventData, true); // stick? = true
-								}
-								$('#calendar').fullCalendar('unselect');
-							},
-							/* editable : true, */
-							eventLimit : true, // allow "more" link when too many events
-							events : [ {
-								title : 'All Day Event',
-								start : '2015-07-01'
-							}, {
-								title : 'Long Event',
-								start : '2015-07-07',
-								end : '2015-07-10'
-							}, {
-								id : 999,
-								title : 'Repeating Event',
-								start : '2015-07-09T16:00:00'
-							}, {
-								id : 999,
-								title : 'Repeating Event',
-								start : '2015-07-16T16:00:00'
-							}, {
-								title : 'Conference',
-								start : '2015-07-11',
-								end : '2015-07-13'
-							}, {
-								title : 'Meeting',
-								start : '2015-07-12T10:30:00',
-								end : '2015-07-12T12:30:00'
-							}, {
-								title : 'Lunch',
-								start : '2015-07-12T12:00:00'
-							}, {
-								title : 'Meeting',
-								start : '2015-07-12T14:30:00'
-							}, {
-								title : 'Happy Hour',
-								start : '2015-07-12T17:30:00'
-							}, {
-								title : 'Dinner',
-								start : '2015-07-12T20:00:00'
-							}, {
-								title : 'Birthday Party',
-								start : '2015-07-13T07:00:00'
-							}, {
-								title : 'Click for Google',
-								url : 'http://google.com/',
-								start : '2015-07-28'
-							} ]
-						});
-				$("#dp1").fdatepicker({  
-					format : "yyyy-mm-dd",
-					"setDate": new Date()
-				});
-			});
-</script>
+<!-- <script type="text/javascript" src="js/JSON-js-master/json_parse.js"></script> -->
+<script src="objects/index.js"></script>
 <style>
 #calendar {
 	width: auto;
-	height : 100%;
+	height: 100%;
 }
 
 .fc-toolbar {
@@ -130,12 +51,28 @@
 	border: 0px;
 }
 </style>
+<script type="text/javascript">
+	var firstObj = IndexC.index = new IndexC.index();
+	firstObj.renderTestChart();
+	window.onbeforeunload = before;
+	window.onunload = after;
+	function before(evt) {
+		localStorage.removeItem("123m3w13312");
+
+	}
+	function after(evt) {
+		//This event fires too fast for the application to execute before the browser unloads
+	}
+</script>
 </head>
 <body>
 	<form class="custom">
 		<div id="header"></div>
 		<div id="navbar">
-			<div><label style="color:#ffffff; padding: 5px;">Welcome : MarAngelo</label></div>
+			<div>
+				<label style="color: #ffffff; padding: 5px;" id="loggedin_label">Welcome
+					: MarAngelo</label>
+			</div>
 		</div>
 		<div id="container">
 			<div id="left_margin"></div>
@@ -145,17 +82,25 @@
 						<td>Employee Name</td>
 						<td><input type="text" /></td>
 					</tr>
+					<tr id="current_course_select_row">
+						<td>Current Courses</td>
+						<td><select id="current_course_select_id" class="large">
+								<option value="selected">Select Me</option>
+								<option>This is another option too</option>
+								<option>Look, a third option</option>
+						</select></td>
+					</tr>
 					<tr>
 						<td>Course</td>
-						<td><select id="customDropdown" class="large">
-								<option>This is another option</option>
+						<td><select id="course_select_id" class="large">
+								<option value="selected">Select Me</option>
 								<option>This is another option too</option>
 								<option>Look, a third option</option>
 						</select></td>
 					</tr>
 					<tr>
 						<td>Study Plan</td>
-						<td><select id="customDropdown" class="large">
+						<td><select id="study_plan_id" class="large">
 								<option>This is another option</option>
 								<option>This is another option too</option>
 								<option>Look, a third option</option>
@@ -163,7 +108,7 @@
 					</tr>
 					<tr>
 						<td>Training Hours</td>
-						<td><select id="customDropdown" class="small">
+						<td><select id="training_hours_id" class="small">
 								<option>1</option>
 								<option>2</option>
 								<option>3</option>
@@ -183,13 +128,13 @@
 						<td>Enrollment Date</td>
 						<td><input type="text" /></td>
 					</tr>
-					<tr>  
+					<tr>
 						<td>Exam Date</td>
 						<td><input type="text" /></td>
 					</tr>
 					<tr>
 						<td colspan="2" class="full-width"><a
-							href="javscript:void(0)" class="button buttonA">Plot Schedule</a>
+							href="javscript:void(0)" onclick='firstObj.PushEvent()' class="button buttonA">Plot Schedule</a>
 						</td>
 					</tr>
 					<tr>
@@ -198,21 +143,16 @@
 								Schedule</a></td>
 					</tr>
 				</table>
-				<!-- <table class="table4">
-				<tr>
-					<td>Sample</td>
-					<td><input type="text" /></td>
-					<td>Sample</td>
-					<td><input type="text" /></td>
-				</tr>
-			</table> -->
-				<table style="width: 100%; border : 0px;">
+				<div>
+					<label for="checkbox1"> Label for Checkbox <input
+						type="checkbox" id="checkbox1"> <span
+						class="custom checkbox"></span>
+					</label>
+				</div>
+				<table style="width: 100%; border: 0px;">
 					<tr class="full-width">
-						<td>
-							Start Date
-						</td>
-						<td>
-							<input type="text" class="span2 large" value="" id="dp1">
+						<td>Start Date</td>
+						<td><input type="text" class="span2 large" value="" id="dp1">
 						</td>
 					</tr>
 				</table>
